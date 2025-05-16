@@ -120,6 +120,7 @@ bracketsio
 brave
 bravepkg
 brosix
+browserosaurus
 bruno
 bugdom
 burpsuitecommunityedition

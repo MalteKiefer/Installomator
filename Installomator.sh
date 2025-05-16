@@ -2762,6 +2762,13 @@ brosix)
     appNewVersion=""
     expectedTeamID="TA6P23NW8H"
     ;;
+browserosaurus)
+    name="Browserosaurus"
+    type="zip"
+    downloadURL="$(downloadURLFromGit will-stone browserosaurus)"
+    appNewVersion="$(versionFromGit will-stone browserosaurus)"
+    expectedTeamID="Z89KPMLTFR"
+    ;;
 bruno)
     # https://github.com/usebruno/bruno; https://www.usebruno.com/
     name="Bruno"
