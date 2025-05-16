@@ -542,7 +542,6 @@ microsoftedge
 microsoftedgeconsumerstable
 microsoftedgeenterprisestable
 microsoftexcel
-microsoftexcelreset
 microsoftlicenseremovaltool
 microsoftlicensereset
 microsoftoffice365
@@ -564,6 +563,7 @@ microsoftoutlookdataremoval
 microsoftoutlookreset
 microsoftpowerpoint
 microsoftpowerpointreset
+microsoftremotedesktop
 microsoftremotedesktop
 microsoftremotehelp
 microsoftsharepointplugin
@@ -979,6 +979,7 @@ weprint
 whatroute
 whatsapp
 whimsical
+windowsapp
 wireshark
 wordservice
 workbrew
