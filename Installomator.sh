@@ -349,7 +349,7 @@ if [[ $(/usr/bin/arch) == "arm64" ]]; then
     fi
 fi
 VERSION="10.9beta"
-VERSIONDATE="2025-04-22"
+VERSIONDATE="2025-05-16"
 
 # MARK: Functions
 
@@ -3759,6 +3759,13 @@ depnotify)
     downloadURL="https://files.jamfconnect.com/DEPNotify.pkg"
     expectedTeamID="VRPY9KHGX6"
     ;;
+deskpad)
+    name="DeskPad"
+    type="zip"
+    downloadURL="$(downloadURLFromGit Stengo DeskPad)"
+    appNewVersion="$(versionFromGit Stengo DeskPad)"
+    expectedTeamID="TYPC962S4N"
+    ;;
 desktoppr)
     name="desktoppr"
     type="pkg"
@@ -6995,7 +7002,7 @@ microsoftvisualstudiocode|\
 visualstudiocode)
     name="Visual Studio Code"
     type="zip"
-    appNewVersion=$(curl -fsL -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0.1 Safari/605.1.15' "https://code.visualstudio.com/Updates" | grep "/darwin" | grep -oiE ".com/([^>]+)([^<]+)/darwin" | cut -d "/" -f 2 | sed $'s/[^[:print:]	]//g' | head -1 )
+    appNewVersion=$(curl -s https://update.code.visualstudio.com/api/update/darwin-arm64/stable/latest | sed -n 's/.*"name": *"\([^"]*\)".*/\1/p')
     downloadURL="https://update.code.visualstudio.com/${appNewVersion}/darwin-universal/stable" # Universal
     expectedTeamID="UBF8T346G9"
     appName="Visual Studio Code.app"
