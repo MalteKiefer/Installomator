@@ -1,25 +1,52 @@
-From e85736def5ce0c89a7dd1c05d9071a31feed05cc Mon Sep 17 00:00:00 2001
+From 9b21de76da9a65a98fbba7a2ff4cc66f723fe464 Mon Sep 17 00:00:00 2001
 From: Richard <xplora@wak.co.nz>
-Date: Thu, 1 May 2025 14:12:22 +1200
-Subject: [PATCH] Update cyberduck.sh
+Date: Mon, 14 Apr 2025 13:18:38 +1200
+Subject: [PATCH 1/2] Update synologydriveclient.sh
 
-Horribly bad form to download the same file twice, because 1. it's very unfriendly to NAT'd environments as the server might see the extra hit as cause for alarm, and 2. there is the tenet if chances the information could change between the two downloads, resulting in the downloadURL containing a link to an older version of the app than the version that then gets identified in appNewVersion.
+cleanup label, no need for it to download and filter the same information twice.
 ---
- fragments/labels/cyberduck.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fragments/labels/synologydriveclient.sh | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fragments/labels/cyberduck.sh b/fragments/labels/cyberduck.sh
-index 3f57fe52f..46d3c068c 100644
---- a/fragments/labels/cyberduck.sh
-+++ b/fragments/labels/cyberduck.sh
-@@ -1,7 +1,8 @@
- cyberduck)
-     name="Cyberduck"
-     type="zip"
--    downloadURL=$(curl -fs https://version.cyberduck.io/changelog.rss | xpath '//rss/channel/item/enclosure/@url' 2>/dev/null | cut -d '"' -f 2 )
--    appNewVersion=$(curl -fs https://version.cyberduck.io/changelog.rss | xpath '//rss/channel/item/enclosure/@sparkle:shortVersionString' 2>/dev/null | cut -d '"' -f 2 )
-+    changeLOG="$( curl -fs https://version.cyberduck.io/changelog.rss )"
-+    downloadURL=$( echo "$changeLOG" | xpath '//rss/channel/item/enclosure/@url' 2>/dev/null | cut -d '"' -f 2 )
-+    appNewVersion=$( echo "$changeLOG" | xpath '//rss/channel/item/enclosure/@sparkle:shortVersionString' 2>/dev/null | cut -d '"' -f 2 )
-     expectedTeamID="G69SCX94XU"
+diff --git a/fragments/labels/synologydriveclient.sh b/fragments/labels/synologydriveclient.sh
+index 04918de90..25358c621 100644
+--- a/fragments/labels/synologydriveclient.sh
++++ b/fragments/labels/synologydriveclient.sh
+@@ -1,10 +1,9 @@
+ synologydriveclient)
+     name="Synology Drive Client"
+     type="pkgInDmg"
+-    # packageID="com.synology.CloudStation"
+     versionKey="CFBundleVersion"
+-    downloadURL=$(appVersion=`curl -sf https://archive.synology.com/download/Utility/SynologyDriveClient | grep -m 1 /download/Utility/SynologyDriveClient/ | sed "s|.*>\(.*\)<.*|\\1|"` && appShortVersion=`sed 's#.*-\(\)#\1#' <<< $appVersion` && echo https://global.download.synology.com/download/Utility/SynologyDriveClient/"$appVersion"/Mac/Installer/synology-drive-client-"${appShortVersion}".dmg)
+-    # appNewVersion=$(appVersionP1=`curl -sf https://archive.synology.com/download/Utility/SynologyDriveClient | grep -m 1 /download/Utility/SynologyDriveClient/ | sed "s|.*>\(.*\)-.*|\\1|"` && sed 's/\(.\{0\}\)./\17/' <<< $appVersionP1)
+-    appNewVersion=$(curl -sf https://archive.synology.com/download/Utility/SynologyDriveClient | grep -m 1 /download/Utility/SynologyDriveClient/ | sed "s|.*>\(.*\)<.*|\\1|" | sed "s#.*-\(\)#\1#")
++    appFullVersion="$( curl -sf "https://archive.synology.com/download/Utility/SynologyDriveClient" | grep -m 1 "/download/Utility/SynologyDriveClient/" | sed "s|.*>\(.*\)<.*|\\1|" )"
++    appNewVersion="$( echo $appFullVersion | sed 's#.*-\(\)#\1#' )"
++    downloadURL="https://global.download.synology.com/download/Utility/SynologyDriveClient/$appFullVersion/Mac/Installer/synology-drive-client-$appNewVersion.dmg"
+     expectedTeamID="X85BAK35Y4"
+     ;;
+
+From 9ee6418f433fbfb618a475378c50e44ca5791895 Mon Sep 17 00:00:00 2001
+From: Richard <xplora@wak.co.nz>
+Date: Mon, 14 Apr 2025 13:31:17 +1200
+Subject: [PATCH 2/2] Update synologydriveclient.sh
+
+One last consistency check, making sure the sed's are formatted the same way, so the differences are more obvious.
+---
+ fragments/labels/synologydriveclient.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fragments/labels/synologydriveclient.sh b/fragments/labels/synologydriveclient.sh
+index 25358c621..9d50dbd4e 100644
+--- a/fragments/labels/synologydriveclient.sh
++++ b/fragments/labels/synologydriveclient.sh
+@@ -3,7 +3,7 @@ synologydriveclient)
+     type="pkgInDmg"
+     versionKey="CFBundleVersion"
+     appFullVersion="$( curl -sf "https://archive.synology.com/download/Utility/SynologyDriveClient" | grep -m 1 "/download/Utility/SynologyDriveClient/" | sed "s|.*>\(.*\)<.*|\\1|" )"
+-    appNewVersion="$( echo $appFullVersion | sed 's#.*-\(\)#\1#' )"
++    appNewVersion="$( echo $appFullVersion | sed "s|.*-\(\)|\\1|" )"
+     downloadURL="https://global.download.synology.com/download/Utility/SynologyDriveClient/$appFullVersion/Mac/Installer/synology-drive-client-$appNewVersion.dmg"
+     expectedTeamID="X85BAK35Y4"
      ;;
