@@ -9496,6 +9496,13 @@ sysexlibrarian)
     appNewVersion=$(curl -fs "https://www.snoize.com/SysExLibrarian/SysExLibrarian.xml" | xpath 'string(//rss/channel/item[1]/sparkle:version)' 2>/dev/null)
     expectedTeamID="YDJAW5GX9U"
     ;;
+tabby)
+    name="Tabby"
+    type="dmg"
+    downloadURL="$(downloadURLFromGit Eugeny tabby)"
+    appNewVersion="$(versionFromGit Eugeny tabby)"
+    expectedTeamID="V4JSMC46SY"
+    ;;
 tableaudesktop)
     name="Tableau Desktop"
     type="pkgInDmg"

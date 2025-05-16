@@ -874,6 +874,7 @@ synologyactivebackupforbusinessagent
 synologyassistant
 synologydriveclient
 sysexlibrarian
+tabby
 tableaudesktop
 tableaupublic
 tableaureader
