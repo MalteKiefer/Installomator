@@ -237,6 +237,7 @@ defaultfolderx
 deon-cloud
 deon-onprem
 depnotify
+deskpad
 desktoppr
 detectxswift
 devonthink
