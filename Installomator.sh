@@ -6647,7 +6647,6 @@ microsoftexcel)
     updateTool="/Library/Application Support/Microsoft/MAU2.0/Microsoft AutoUpdate.app/Contents/MacOS/msupdate"
     updateToolArguments=( --install --apps XCEL2019 )
     ;;
-
 microsoftexcelreset)
     name="Microsoft Excel Reset"
     type="pkg"
