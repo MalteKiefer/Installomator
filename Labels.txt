@@ -542,6 +542,7 @@ microsoftedge
 microsoftedgeconsumerstable
 microsoftedgeenterprisestable
 microsoftexcel
+microsoftexcelreset
 microsoftlicenseremovaltool
 microsoftlicensereset
 microsoftoffice365
