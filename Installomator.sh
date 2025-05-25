@@ -349,7 +349,7 @@ if [[ $(/usr/bin/arch) == "arm64" ]]; then
     fi
 fi
 VERSION="10.9beta"
-VERSIONDATE="2025-05-16"
+VERSIONDATE="2025-05-25"
 
 # MARK: Functions
 
@@ -6123,6 +6123,21 @@ livereplayer)
     downloadURL=$(curl -fsL https://fsm-livereplayer.s3.amazonaws.com/update/stable/latest.json | grep package-url | grep -o "https:.*.pkg")
     appNewVersion=$(echo ${downloadURL} | grep -o "LiveReplayer-.*" | grep -o "[0-9].*[0-9]")
     expectedTeamID="2H7P9E934F"
+    ;;
+logioptionsplus)
+    name="Logi Options+"
+    type="zip"
+    downloadURL="https://download01.logi.com/web/ftp/pub/techsupport/optionsplus/logioptionsplus_installer.zip"
+    appNewVersion=$(curl -fs "https://support.logi.com/api/v2/help_center/en-us/articles.json?label_names=webcontent=productdownload,webos=mac-macos-x-12.0" | tr "," "\n" | grep -A 10 "macOS" | grep -B 5 -ie "https.*/.*/optionsplus/.*\.zip" | grep "Software Version" | sed 's/\\u[0-9a-z][0-9a-z][0-9a-z][0-9a-z]//g' | grep -ioe "Software Version.*[0-9.]*" | tr "/" "\n" | grep -oe "[0-9.]*" | head -1)
+    appCustomVersion(){
+        if [ -f "/Applications/logioptionsplus.app" ]; then
+            /usr/bin/defaults read "/Applications/logioptionsplus.app/Contents/Info.plist" CFBundleShortVersionString
+        fi
+    }
+    installerTool="logioptionsplus_installer.app"
+    CLIInstaller="logioptionsplus_installer.app/Contents/MacOS/logioptionsplus_installer"
+    CLIArguments=( "--quiet" )
+    expectedTeamID="QED4VVPZWA"
     ;;
 logioptions|\
 logitechoptions)

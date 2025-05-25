@@ -493,6 +493,7 @@ linear
 linearmouse
 livereplayer
 logioptions
+logioptionsplus
 logitechoptions
 logitechoptionsplus
 logitune
